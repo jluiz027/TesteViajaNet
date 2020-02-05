@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
+WORKDIR /src
+COPY ["WebApi/WebApi.csproj", "WebApi/"]
+COPY ["TesteDBServer.Application/TesteDBServer.Application.csproj", "TesteDBServer.Application/"]
+COPY ["TesteDBServer.Domain/TesteDBServer.Domain.csproj", "TesteDBServer.Domain/"]
+COPY ["TesteDBServer.Repository/TesteDBServer.Repository.csproj", "TesteDBServer.Repository/"]
+RUN dotnet restore "WebApi/WebApi.csproj"
+COPY . .
+WORKDIR "/src/WebApi"
+RUN dotnet build "WebApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "WebApi.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "WebApi.dll"]
