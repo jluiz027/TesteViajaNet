@@ -17,6 +17,7 @@ namespace TesteViajaNet.Repository.RabbitMQ
 
         public void Salvar(Comportamento comportamento)
         {
+            comportamento.Id = new Guid().ToString();
             _pushQueue.PushMessage(comportamento, "Comportamento");
         }
     }

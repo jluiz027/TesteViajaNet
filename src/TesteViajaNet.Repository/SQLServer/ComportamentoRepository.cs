@@ -13,6 +13,7 @@ namespace TesteViajaNet.Repository.SQLServer
         {
             using (TesteViajaNetContext testeViajaNetContext = new TesteViajaNetContext())
             {
+                comportamento.Id = new Guid().ToString();
                 testeViajaNetContext.comportamento.Add(comportamento);
                 testeViajaNetContext.SaveChanges();
             }

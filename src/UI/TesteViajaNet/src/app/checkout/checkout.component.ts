@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Comportamento } from 'src/model/Comportamento';
 import { ComportamentoService } from '../comportamentoservice.service';
+import { Comportamento } from 'src/model/Comportamento';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.css']
 })
-export class HomeComponent implements OnInit {
+export class CheckoutComponent implements OnInit {
 
   constructor(private comportamentoservice:ComportamentoService) { }
 
   ngOnInit() {
     let comportamento = new Comportamento();
-    comportamento.NomePagina = "Home";
+    comportamento.NomePagina = "Chekout";
     comportamento.Id="";
     comportamento.Browser = window.navigator.userAgent;
     comportamento.IP;
