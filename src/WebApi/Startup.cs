@@ -23,6 +23,7 @@ namespace WebApi
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +41,18 @@ namespace WebApi
             services.AddScoped<IPedidoAppService, PedidoAppService>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200/")
+                                //.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+            });
+
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Info
@@ -49,6 +62,7 @@ namespace WebApi
                     Description = "TesteViajaNet",
                 });
             });
+
             var connection = Configuration["ConnectionStrings:TesteDBServerContext"];
 
         }
@@ -65,6 +79,7 @@ namespace WebApi
                 app.UseHsts();
             }
 
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();
