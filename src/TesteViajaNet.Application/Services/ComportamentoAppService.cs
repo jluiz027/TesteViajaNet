@@ -7,7 +7,7 @@ using TesteViajaNet.Domain.Interfaces;
 
 namespace TesteViajaNet.Application.Services
 {
-    class ComportamentoAppService : IComportamentoAppService
+    public class ComportamentoAppService : IComportamentoAppService
     {
         IComportamentoRepository _comportamentoRepository;
 
@@ -18,7 +18,7 @@ namespace TesteViajaNet.Application.Services
 
         public void SalvarComportamento(Comportamento comportamento)
         {
-            throw new NotImplementedException();
+            _comportamentoRepository.Salvar(comportamento);
         }
     }
 }

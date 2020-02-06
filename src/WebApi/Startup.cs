@@ -12,14 +12,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using TesteDBServer.Application.Interfaces;
-using TesteDBServer.Application.Services;
-using TesteDBServer.Domain.Interfaces;
-using TesteDBServer.Domain.Interfaces.Services;
-using TesteDBServer.Repository;
-using TesteDBServer.Repository.Context.Mysql;
-using TesteDBServer.Domain.Services;
 using Microsoft.EntityFrameworkCore;
+using TesteViajaNet.Application.Interfaces;
+using TesteViajaNet.Application.Services;
+using TesteViajaNet.Domain.Interfaces;
+//using TesteViajaNet.Repository.SQLServer;
+using TesteViajaNet.Repository.RabbitMQ;
 
 namespace WebApi
 {
@@ -37,12 +35,10 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddScoped<ILancamentoAppService, LancamentoAppService>();
-            services.AddScoped<ILancamentoRepository, LancamentoRepository>();
-            services.AddScoped<ILancamentoService, LancamentoService>();
-            services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
-            services.AddScoped<IContaCorrenteAppService, ContaCorrenteAppService>();
-            services.AddScoped<IContaCorrenteRepository, ContaCorrenteRepository>();
+            services.AddScoped<IComportamentoAppService, ComportamentoAppService>();
+            services.AddScoped<IComportamentoRepository, ComportamentoRepository>();
+            services.AddScoped<IPedidoAppService, PedidoAppService>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
 
             services.AddSwaggerGen(s =>
             {
@@ -54,9 +50,7 @@ namespace WebApi
                 });
             });
             var connection = Configuration["ConnectionStrings:TesteDBServerContext"];
-            services.AddDbContext<TesteDBServerContext>(options =>
-                options.UseMySQL(connection)
-            );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,11 +4,11 @@ using System.Text;
 using TesteViajaNet.Application.Interfaces;
 using TesteViajaNet.Domain.Entities;
 using TesteViajaNet.Domain.Interfaces;
-//using TesteViajaNet.Domain.
+
 
 namespace TesteViajaNet.Application.Services
 {
-    class PedidoAppService : IPedidoAppService
+    public class PedidoAppService : IPedidoAppService
     {
         IPedidoRepository _pedidoRepository;
         public PedidoAppService(IPedidoRepository pedidoRepository)
@@ -17,7 +17,7 @@ namespace TesteViajaNet.Application.Services
         }
         public void SalvarPedido(Pedido pedido)
         {
-            throw new NotImplementedException();
+            _pedidoRepository.SalvarPedido(pedido);
         }
     }
 }
