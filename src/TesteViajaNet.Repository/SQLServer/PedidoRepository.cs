@@ -9,9 +9,10 @@ namespace TesteViajaNet.Repository.SQLServer
 {
     public class PedidoRepository : IPedidoRepository
     {
-        public PedidoRepository()
+        SQLServerConnectionConfig _sQLServerConnectionConfig;
+        public PedidoRepository(SQLServerConnectionConfig sQLServerConnectionConfig)
         {
-
+            _sQLServerConnectionConfig = sQLServerConnectionConfig;
         }
         public void SalvarPedido(Pedido pedido)
         {

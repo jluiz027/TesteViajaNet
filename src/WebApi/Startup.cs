@@ -18,20 +18,22 @@ using TesteViajaNet.Application.Services;
 using TesteViajaNet.Domain.Interfaces;
 //using TesteViajaNet.Repository.SQLServer;
 using TesteViajaNet.Repository.RabbitMQ;
+using TesteViajaNet.Domain.Entities;
 
 namespace WebApi
 {
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
 
             //InicializaBancoMysql.CriarAmbiente(Configuration["ConnectionStrings:TesteDBServerContextInicializacao"]);
         }
 
-        public IConfiguration Configuration { get; }
+        //public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -46,7 +48,7 @@ namespace WebApi
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200/")
+                    builder.WithOrigins("http://localhost:4200")
                                 //.AllowAnyOrigin()
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
@@ -63,8 +65,13 @@ namespace WebApi
                 });
             });
 
-            var connection = Configuration["ConnectionStrings:TesteDBServerContext"];
+            SQLServerConnectionConfig sqlServerConnectionConfig = new SQLServerConnectionConfig();
+            _configuration.GetSection("SqlServerConnection").Bind(sqlServerConnectionConfig);
 
+            //Create singleton from instance
+            services.AddSingleton<SQLServerConnectionConfig>(sqlServerConnectionConfig);
+            //var connection = Configuration["ConnectionStrings:TesteDBServerContext"];
+            //var connection = _configuration;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

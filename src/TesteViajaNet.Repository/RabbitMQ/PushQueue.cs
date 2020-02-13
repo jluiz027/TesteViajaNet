@@ -15,7 +15,7 @@ namespace TesteViajaNet.Repository.RabbitMQ
             ConnectionFactory factory = new ConnectionFactory();
             factory.Uri = new Uri("amqp://guest:guest@192.168.52.134:5672");
 
-            _conn = factory.CreateConnection();
+            //_conn = factory.CreateConnection();
         }
 
         public void PushMessage(T message, string queueName)
