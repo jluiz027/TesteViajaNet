@@ -11,8 +11,10 @@ namespace TesteViajaNet.Application.Services
     public class PedidoAppService : IPedidoAppService
     {
         IPedidoRepository _pedidoRepository;
+        //SQLServerConnectionConfig _sQLServerConnectionConfig;
         public PedidoAppService(IPedidoRepository pedidoRepository)
         {
+            //_sQLServerConnectionConfig = sQLServerConnectionConfig;
             _pedidoRepository = pedidoRepository;
         }
         public void SalvarPedido(Pedido pedido)
